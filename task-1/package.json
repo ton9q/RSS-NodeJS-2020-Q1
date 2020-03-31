@@ -1,0 +1,35 @@
+{
+  "name": "cli-caesar-cipher",
+  "version": "1.0.0",
+  "description": "**Implement CLI tool that will encode and decode a text by [Caesar cipher](https://en.wikipedia.org/wiki/Caesar_cipher)**.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node src/index.js",
+    "lint": "eslint src/**/*.js ",
+    "lint:fix": "npm run lint -- --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ton9q/RSS-NodeJS-2020-Q1.git"
+  },
+  "author": "ton9q",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ton9q/RSS-NodeJS-2020-Q1/issues"
+  },
+  "homepage": "https://github.com/ton9q/RSS-NodeJS-2020-Q1#readme",
+  "husky": {
+    "hooks": {
+      "pre-push": "npm run lint"
+    }
+  },
+  "dependencies": {
+    "commander": "^5.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-airbnb-base": "^14.1.0",
+    "eslint-plugin-import": "^2.20.2",
+    "husky": "^4.2.3"
+  }
+}
