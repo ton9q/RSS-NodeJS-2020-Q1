@@ -10,11 +10,6 @@ const getAllByBoardId = async boardId => {
   return tasks;
 };
 
-const getAllByUserId = async userId => {
-  const tasks = await tasksRepo.getAllByUserId(userId);
-  return tasks;
-};
-
 const getById = async (boardId, taskId) => {
   const task = await tasksRepo.getById(boardId, taskId);
   return task || null;
@@ -36,7 +31,7 @@ const deleteById = async (boardId, taskId) => {
 };
 
 const deleteByBoardId = async boardId => {
-  const tasks = await tasksRepo.getAllByBoardId(boardId);
+  const tasks = await getAllByBoardId(boardId);
   const deletedTasksPromise = tasks.map(async ({ id }) => {
     const task = await deleteById(boardId, id);
     return task;
@@ -45,28 +40,17 @@ const deleteByBoardId = async boardId => {
   return deletedTasks;
 };
 
-const deleteByUserId = async userId => {
-  const tasks = await getAllByUserId(userId);
-  console.log('tasks', tasks);
-  const deletedTasksPromise = tasks.map(async task => {
-    let task1 = null;
-    if (task.id) {
-      task1 = await deleteById(null, task.id);
-    }
-    return task1;
-  });
-  const deletedTasks = await Promise.all(deletedTasksPromise);
-  console.log('deletedTasks', deletedTasks);
-  return deletedTasks;
+const unsetUser = async userId => {
+  const tasks = await tasksRepo.unsetUser(userId);
+  return tasks;
 };
 
 module.exports = {
   getAllByBoardId,
-  getAllByUserId,
   getById,
   add,
   updateById,
   deleteById,
   deleteByBoardId,
-  deleteByUserId
+  unsetUser
 };

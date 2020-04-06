@@ -28,7 +28,7 @@ const updateById = async (id, data) => {
 
 const deleteById = async id => {
   const user = await usersRepo.deleteById(id);
-  await taskService.deleteByUserId(id);
+  await taskService.unsetUser(id);
   return user;
 };
 

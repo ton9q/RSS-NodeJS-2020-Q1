@@ -4,10 +4,6 @@ const getAllByBoardId = boardId => {
   return Object.values(tasks).filter(task => task.boardId === boardId);
 };
 
-const getAllByUserId = userId => {
-  return Object.values(tasks).filter(task => task.userId === userId);
-};
-
 const getById = (boardId, taskId) => {
   const task = tasks[taskId];
   return task;
@@ -33,11 +29,21 @@ const deleteById = (boardId, taskId) => {
   return task;
 };
 
+const unsetUser = userId => {
+  const tasksForUnset = Object.values(tasks).filter(task => {
+    return task.userId === userId;
+  });
+  tasksForUnset.map(task => {
+    tasks[task.id].userId = null;
+  });
+  return tasks;
+};
+
 module.exports = {
   getAllByBoardId,
-  getAllByUserId,
   getById,
   add,
   updateById,
-  deleteById
+  deleteById,
+  unsetUser
 };
