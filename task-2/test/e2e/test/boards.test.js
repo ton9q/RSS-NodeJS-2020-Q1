@@ -1,9 +1,6 @@
 const { request: unauthorizedRequest, routes } = require('../lib');
 const debug = require('debug')('rs:test:boards');
-const {
-  createAuthorizedRequest,
-  shouldAuthorizationBeTested
-} = require('../utils');
+const { createAuthorizedRequest, shouldAuthorizationBeTested } = require('../utils');
 
 const TEST_BOARD_DATA = {
   title: 'Autotest board',

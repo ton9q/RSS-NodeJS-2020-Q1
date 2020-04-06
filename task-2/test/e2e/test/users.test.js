@@ -1,9 +1,6 @@
 const { request: unauthorizedRequest, routes } = require('../lib');
 const debug = require('debug')('rs:test:users');
-const {
-  createAuthorizedRequest,
-  shouldAuthorizationBeTested
-} = require('../utils');
+const { createAuthorizedRequest, shouldAuthorizationBeTested } = require('../utils');
 
 const TEST_USER_DATA = {
   name: 'TEST_USER',
@@ -43,11 +40,11 @@ describe('Users suite', () => {
 
     it('should get a user by id', async () => {
       // Setup:
-      //Create the user
+      // Create the user
       await request
-          .post(routes.users.create)
-          .set('Accept', 'application/json')
-          .send(TEST_USER_DATA);
+        .post(routes.users.create)
+        .set('Accept', 'application/json')
+        .send(TEST_USER_DATA);
 
       const usersResponse = await request
         .get(routes.users.getAll)
@@ -141,9 +138,7 @@ describe('Users suite', () => {
   describe('DELETE', () => {
     it('should delete user successfully', async () => {
       // Setup:
-      const userResponse = await request
-        .post(routes.users.create)
-        .send(TEST_USER_DATA);
+      const userResponse = await request.post(routes.users.create).send(TEST_USER_DATA);
       const userId = userResponse.body.id;
 
       // Test:
