@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const uuid = require('uuid');
+const { columnSchema } = require('../column/column.model');
 
 const boardSchema = new mongoose.Schema(
   {
@@ -13,8 +14,7 @@ const boardSchema = new mongoose.Schema(
       required: true
     },
     columns: {
-      type: Array
-      //   required: true
+      type: [columnSchema]
     }
   },
   {

@@ -20,7 +20,7 @@ const columnSchema = new mongoose.Schema(
   {
     toJSON: {
       transform(doc, ret) {
-        ret.id = ret._id;
+        // ret.id = ret._id;
         delete ret._id;
         delete ret.__v;
       }
@@ -30,4 +30,7 @@ const columnSchema = new mongoose.Schema(
 
 const Column = mongoose.model('Column', columnSchema);
 
-module.exports = Column;
+module.exports = {
+  columnSchema,
+  columnModel: Column
+};

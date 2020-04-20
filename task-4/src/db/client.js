@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 const { MONGO_CONNECTION_STRING } = require('../common/config');
 const logger = require('../logger')(module);
-const User = require('../modules/user/user.model');
+// const User = require('../modules/user/user.model');
 
-const user = new User({ name: 'name', login: 'login', password: 'password' });
+// const user = new User({ name: 'name', login: 'login', password: 'password' });
 
 const connectToDB = cb => {
   mongoose.connect(MONGO_CONNECTION_STRING, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -21,7 +21,7 @@ const connectToDB = cb => {
     await db.dropDatabase(() => {
       logger.info('DB dropped');
     });
-    await User.create(user);
+    // await User.create(user);
 
     cb();
   });

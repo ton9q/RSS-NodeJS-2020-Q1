@@ -5,6 +5,7 @@ const app = require('./app');
 
 connectToDB(() => {
   app.listen(PORT, () => {
-    logger.info(`App is running on http://localhost:${PORT}`);
+    logger.info(`Web server listening at: http://localhost:${PORT}`);
+    logger.info(`Browse your REST API at: http://localhost:${PORT}/doc`);
   });
 });

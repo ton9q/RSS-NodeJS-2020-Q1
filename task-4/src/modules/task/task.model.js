@@ -22,15 +22,12 @@ const taskSchema = new mongoose.Schema(
     },
     userId: {
       type: String
-      //   required: true
     },
     boardId: {
       type: String
-      //   required: true
     },
     columnId: {
       type: String
-      //   required: true
     }
   },
   {
