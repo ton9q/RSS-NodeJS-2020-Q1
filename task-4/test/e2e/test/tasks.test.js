@@ -1,6 +1,9 @@
 const { request: unauthorizedRequest, routes } = require('../lib');
 const debug = require('debug')('rs:test:tasks');
-const { createAuthorizedRequest, shouldAuthorizationBeTested } = require('../utils');
+const {
+  createAuthorizedRequest,
+  shouldAuthorizationBeTested
+} = require('../utils');
 
 const TEST_TASK_DATA = {
   title: 'Autotest task',
@@ -148,12 +151,16 @@ describe('Tasks suite', () => {
 
   describe('DELETE', () => {
     it('should delete task successfully', async () => {
-      await request.get(routes.tasks.getById(testBoardId, testTaskId)).expect(200);
+      await request
+        .get(routes.tasks.getById(testBoardId, testTaskId))
+        .expect(200);
       await request
         .delete(routes.tasks.delete(testBoardId, testTaskId))
         .then(res => expect(res.status).oneOf([200, 204]));
 
-      await request.get(routes.tasks.getById(testBoardId, testTaskId)).expect(404);
+      await request
+        .get(routes.tasks.getById(testBoardId, testTaskId))
+        .expect(404);
     });
   });
 });

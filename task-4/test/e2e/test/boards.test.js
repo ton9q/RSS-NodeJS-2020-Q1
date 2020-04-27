@@ -1,6 +1,9 @@
 const { request: unauthorizedRequest, routes } = require('../lib');
 const debug = require('debug')('rs:test:boards');
-const { createAuthorizedRequest, shouldAuthorizationBeTested } = require('../utils');
+const {
+  createAuthorizedRequest,
+  shouldAuthorizationBeTested
+} = require('../utils');
 
 const TEST_BOARD_DATA = {
   title: 'Autotest board',
@@ -11,6 +14,7 @@ const TEST_BOARD_DATA = {
 };
 describe('Boards suite', () => {
   let request = unauthorizedRequest;
+  let testBoardId;
 
   beforeAll(async () => {
     if (shouldAuthorizationBeTested) {
@@ -20,7 +24,14 @@ describe('Boards suite', () => {
     await request
       .post(routes.boards.create)
       .set('Accept', 'application/json')
-      .send(TEST_BOARD_DATA);
+      .send(TEST_BOARD_DATA)
+      .then(res => (testBoardId = res.body.id));
+  });
+
+  afterAll(async () => {
+    await request
+      .delete(routes.boards.delete(testBoardId))
+      .then(res => expect(res.status).oneOf([200, 204]));
   });
 
   describe('GET', () => {
@@ -123,16 +134,16 @@ describe('Boards suite', () => {
 
   describe('DELETE', () => {
     it('should delete board successfully', async () => {
+      // Setup:
       let boardId;
-      // Setup
+
       await request
-        .get(routes.boards.getAll)
+        .post(routes.boards.create)
         .set('Accept', 'application/json')
+        .send(TEST_BOARD_DATA)
         .expect(200)
-        .then(res => {
-          jestExpect(res.body).not.toHaveLength(0);
-          boardId = res.body[0].id;
-        });
+        .expect('Content-Type', /json/)
+        .then(res => (boardId = res.body.id));
 
       // Test
       await request
