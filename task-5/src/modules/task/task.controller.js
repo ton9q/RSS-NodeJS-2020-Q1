@@ -13,11 +13,13 @@ const getAllByBoardId = async (req, res) => {
 const getById = async (req, res) => {
   const { boardId, taskId } = req.params;
   const task = await taskRepo.getById(boardId, taskId);
-  if (task) {
-    res.json(task);
-  } else {
+
+  if (!task) {
     res.status(404).send({ message: `Task[id="${taskId}"] for Board[id="${boardId}"] not found` });
+    return;
   }
+
+  res.json(task);
 };
 
 const add = async (req, res) => {
@@ -37,13 +39,13 @@ const updateById = async (req, res) => {
 const deleteById = async (req, res) => {
   const { boardId, taskId } = req.params;
   const deletedTask = await taskRepo.deleteById(boardId, taskId);
-  if (deletedTask) {
-    res
-      .status(204)
-      .json({ message: `Task[id="${taskId}"] for Board[id="${boardId}"] was deleted` });
-  } else {
+
+  if (!deletedTask) {
     res.status(404).send({ message: `Task[id="${taskId}"] for Board[id="${boardId}"] not found` });
+    return;
   }
+
+  res.status(204).json({ message: `Task[id="${taskId}"] for Board[id="${boardId}"] was deleted` });
 };
 
 const deleteByBoardId = async (req, res, next) => {

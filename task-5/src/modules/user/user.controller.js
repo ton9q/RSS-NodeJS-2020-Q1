@@ -13,11 +13,13 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   const userId = req.params.id;
   const user = await userRepo.getById(userId);
-  if (user) {
-    res.json(User.toResponse(user));
-  } else {
+
+  if (!user) {
     res.status(404).send({ message: `User[id="${userId}"] not found` });
+    return;
   }
+
+  res.json(User.toResponse(user));
 };
 
 const add = async (req, res) => {
@@ -36,11 +38,13 @@ const updateById = async (req, res) => {
 const deleteById = async (req, res) => {
   const userId = req.params.id;
   const deletedUser = await userRepo.deleteById(userId);
-  if (deletedUser) {
-    res.status(204).json({ message: `User[id="${userId}"] was deleted` });
-  } else {
+
+  if (!deletedUser) {
     res.status(404).send({ message: `User[id="${userId}"] not found` });
+    return;
   }
+
+  res.status(204).json({ message: `User[id="${userId}"] was deleted` });
 };
 
 module.exports = {

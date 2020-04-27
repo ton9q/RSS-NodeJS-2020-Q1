@@ -6,6 +6,9 @@ const { NotFound } = require('http-errors');
 require('./utils/log-uncaught-errors')();
 const logRequestHandler = require('./handlers/log-request.handler');
 const errorHandler = require('./handlers/error.handler');
+const asyncWrapper = require('./utils/async-wrapper');
+const { ensureAuthorization } = require('./modules/authentication/authentication.controller');
+const authenticationRouter = require('./modules/authentication/authentication.router');
 const userRouter = require('./modules/user/user.router');
 const boardRouter = require('./modules/board/board.router');
 const taskRouter = require('./modules/task/task.router');
@@ -27,17 +30,15 @@ app.use('/', (req, res, next) => {
   next();
 });
 
-app.use('/users', userRouter);
-app.use('/boards', boardRouter);
-app.use('/boards', taskRouter);
+app.use('/', authenticationRouter);
+app.use('/users', asyncWrapper(ensureAuthorization), userRouter);
+app.use('/boards', asyncWrapper(ensureAuthorization), boardRouter);
+app.use('/boards', asyncWrapper(ensureAuthorization), taskRouter);
 
 app.use((req, res, next) => {
   next(NotFound('This page not found.'));
 });
 
 app.use(errorHandler);
-
-// throw Error('Uncaught error');
-// Promise.reject(Error('Oops, promise rejected!'));
 
 module.exports = app;

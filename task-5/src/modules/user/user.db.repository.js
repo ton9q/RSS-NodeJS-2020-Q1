@@ -5,6 +5,11 @@ const getAll = async () => {
   return users;
 };
 
+const getByLogin = async login => {
+  const user = await User.findOne({ login });
+  return user;
+};
+
 const getById = async id => {
   const user = await User.findById(id);
   return user;
@@ -27,6 +32,7 @@ const deleteById = async id => {
 
 module.exports = {
   getAll,
+  getByLogin,
   getById,
   add,
   updateById,
