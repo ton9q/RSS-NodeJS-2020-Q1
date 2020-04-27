@@ -12,11 +12,13 @@ const getAll = async (req, res) => {
 const getById = async (req, res) => {
   const boardId = req.params.id;
   const board = await boardRepo.getById(boardId);
-  if (board) {
-    res.json(board);
-  } else {
+
+  if (!board) {
     res.status(404).send({ message: `Board[id="${boardId}"] not found` });
+    return;
   }
+
+  res.json(board);
 };
 
 const add = async (req, res) => {
@@ -35,11 +37,13 @@ const updateById = async (req, res) => {
 const deleteById = async (req, res) => {
   const boardId = req.params.id;
   const deletedBoard = await boardRepo.deleteById(boardId);
-  if (deletedBoard) {
-    res.status(204).json({ message: `Board[id="${boardId}"] was deleted` });
-  } else {
+
+  if (!deletedBoard) {
     res.status(404).send({ message: `Board[id="${boardId}"] not found` });
+    return;
   }
+
+  res.status(204).json({ message: `Board[id="${boardId}"] was deleted` });
 };
 
 module.exports = {
