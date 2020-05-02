@@ -1,17 +1,16 @@
 const router = require('express').Router();
-const asyncWrapper = require('../../utils/async-wrapper');
-const userController = require('./user.controller');
-const taskController = require('../task/task.controller');
+const { getAll, getById, add, updateById, deleteById } = require('./user.controller');
+const { unsetUser } = require('../task/task.middleware');
 
 router
   .route('/')
-  .get(asyncWrapper(userController.getAll))
-  .post(asyncWrapper(userController.add));
+  .get(getAll)
+  .post(add);
 
 router
   .route('/:id')
-  .get(asyncWrapper(userController.getById))
-  .put(asyncWrapper(userController.updateById))
-  .delete(asyncWrapper(taskController.unsetUser), asyncWrapper(userController.deleteById));
+  .get(getById)
+  .put(updateById)
+  .delete(unsetUser, deleteById);
 
 module.exports = router;

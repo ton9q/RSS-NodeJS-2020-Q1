@@ -36,14 +36,13 @@ const deleteById = async (boardId, taskId) => {
   return deletedTask;
 };
 
+const deleteByBoardId = async boardId => {
+  const deletedTask = await Task.deleteMany({ boardId });
+  return deletedTask;
+};
+
 const unsetUser = async userId => {
-  const tasks = Task.find({ userId });
-  await Promise.all(
-    tasks.map(async task => {
-      task.userId = null;
-      await task.save();
-    })
-  );
+  await Task.updateMany({ userId }, { userId: null });
   return true;
 };
 
@@ -54,5 +53,6 @@ module.exports = {
   add,
   updateById,
   deleteById,
+  deleteByBoardId,
   unsetUser
 };

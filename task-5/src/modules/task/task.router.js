@@ -1,16 +1,15 @@
 const router = require('express').Router();
-const asyncWrapper = require('../../utils/async-wrapper');
-const taskController = require('./task.controller');
+const { getAllByBoardId, getById, add, updateById, deleteById } = require('./task.controller');
 
 router
   .route('/:boardId/tasks')
-  .get(asyncWrapper(taskController.getAllByBoardId))
-  .post(asyncWrapper(taskController.add));
+  .get(getAllByBoardId)
+  .post(add);
 
 router
   .route('/:boardId/tasks/:taskId')
-  .get(asyncWrapper(taskController.getById))
-  .put(asyncWrapper(taskController.updateById))
-  .delete(asyncWrapper(taskController.deleteById));
+  .get(getById)
+  .put(updateById)
+  .delete(deleteById);
 
 module.exports = router;
