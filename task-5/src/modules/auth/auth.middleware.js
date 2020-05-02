@@ -10,7 +10,7 @@ const ensureAuthorization = asyncWrapper(async (req, res, next) => {
     throw new Unauthorized('User is not authorized');
   }
 
-  const tokenBody = token.replace('Bearer ', '');
+  const tokenBody = token.split(' ')[1];
   jwt.verify(tokenBody, JWT_SECRET_KEY);
 
   next();
