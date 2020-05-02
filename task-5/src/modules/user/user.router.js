@@ -1,11 +1,12 @@
 const router = require('express').Router();
 const { getAll, getById, add, updateById, deleteById } = require('./user.controller');
 const { unsetUser } = require('../task/task.middleware');
+const { validateUser } = require('../../middleware/validation.middleware');
 
 router
   .route('/')
   .get(getAll)
-  .post(add);
+  .post(validateUser, add);
 
 router
   .route('/:id')
