@@ -105,5 +105,10 @@
   ],
   "include": [
     "./src/**/*.ts"
-  ]
+  ],
+  "typedocOptions": {
+    "entryPoints": ["./src"],
+    "entryPointStrategy": "expand",
+    "out": "jsdocs"
+}
 }
